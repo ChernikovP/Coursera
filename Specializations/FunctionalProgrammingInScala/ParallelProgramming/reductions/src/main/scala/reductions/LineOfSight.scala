@@ -4,7 +4,6 @@ import org.scalameter._
 import common._
 
 object LineOfSightRunner {
-  
   val standardConfig = config(
     Key.exec.minWarmupRuns -> 40,
     Key.exec.maxWarmupRuns -> 80,
@@ -19,11 +18,13 @@ object LineOfSightRunner {
     val seqtime = standardConfig measure {
       LineOfSight.lineOfSight(input, output)
     }
+
     println(s"sequential time: $seqtime ms")
 
     val partime = standardConfig measure {
       LineOfSight.parLineOfSight(input, output, 10000)
     }
+
     println(s"parallel time: $partime ms")
     println(s"speedup: ${seqtime / partime}")
   }
@@ -56,8 +57,7 @@ object LineOfSight {
 
   case class Leaf(from: Int, until: Int, maxAngle: Float) extends Tree
 
-  /** Traverses the specified part of the array and returns the maximum angle.
-   */
+  /** Traverses the specified part of the array and returns the maximum angle. */
   def upsweepSequential(input: Array[Float], from: Int, until: Int): Float = {
     var i = from
     var max = 0.0f

@@ -6,7 +6,6 @@ import javax.swing._
 import org.scalameter._
 
 object ScalaShop {
-
   class ScalaShopFrame extends JFrame("ScalaShop\u2122") {
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)
     setSize(1024, 600)
@@ -24,10 +23,7 @@ object ScalaShop {
     val filterLabel = new JLabel("Filter")
     controls.add(filterLabel)
 
-    val filterCombo = new JComboBox(Array(
-      "horizontal-box-blur",
-      "vertical-box-blur"
-    ))
+    val filterCombo = new JComboBox(Array("horizontal-box-blur", "vertical-box-blur"))
     controls.add(filterCombo)
 
     val radiusLabel = new JLabel("Radius")
@@ -78,6 +74,7 @@ object ScalaShop {
       }
     })
     fileMenu.add(openMenuItem)
+
     val exitMenuItem = new JMenuItem("Exit")
     exitMenuItem.addActionListener(new ActionListener {
       def actionPerformed(e: ActionEvent) {
@@ -119,7 +116,6 @@ object ScalaShop {
     def getFilterName: String = {
       filterCombo.getSelectedItem.asInstanceOf[String]
     }
-
   }
 
   try {

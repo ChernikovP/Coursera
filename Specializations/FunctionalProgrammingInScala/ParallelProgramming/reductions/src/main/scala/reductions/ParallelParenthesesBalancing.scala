@@ -4,9 +4,7 @@ import org.scalameter._
 import common._
 
 object ParallelParenthesesBalancingRunner {
-
   @volatile var seqResult = false
-
   @volatile var parResult = false
 
   val standardConfig = config(
@@ -23,12 +21,14 @@ object ParallelParenthesesBalancingRunner {
     val seqtime = standardConfig measure {
       seqResult = ParallelParenthesesBalancing.balance(chars)
     }
+
     println(s"sequential result = $seqResult")
     println(s"sequential balancing time: $seqtime ms")
 
     val fjtime = standardConfig measure {
       parResult = ParallelParenthesesBalancing.parBalance(chars, threshold)
     }
+
     println(s"parallel result = $parResult")
     println(s"parallel balancing time: $fjtime ms")
     println(s"speedup: ${seqtime / fjtime}")
@@ -36,9 +36,7 @@ object ParallelParenthesesBalancingRunner {
 }
 
 object ParallelParenthesesBalancing {
-
-  /** Returns `true` iff the parentheses in the input `chars` are balanced.
-   */
+  /** Returns `true` iff the parentheses in the input `chars` are balanced. */
   def balance(chars: Array[Char]): Boolean = {
     def loop(index: Int, opened: Int): Boolean = {
       if (opened < 0) false
@@ -51,8 +49,7 @@ object ParallelParenthesesBalancing {
     loop(0, 0)
   }
 
-  /** Returns `true` iff the parentheses in the input `chars` are balanced.
-   */
+  /** Returns `true` iff the parentheses in the input `chars` are balanced. */
   def parBalance(chars: Array[Char], threshold: Int): Boolean = {
     def traverse(idx: Int, until: Int, left: Int, right: Int): (Int, Int) =
       if (idx == until) (left, right)

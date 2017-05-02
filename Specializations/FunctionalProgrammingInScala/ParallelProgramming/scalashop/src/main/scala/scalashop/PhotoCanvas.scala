@@ -11,9 +11,7 @@ class PhotoCanvas extends JComponent {
 
   var image = loadScalaImage()
 
-  override def getPreferredSize = {
-    new Dimension(image.width, image.height)
-  }
+  override def getPreferredSize = new Dimension(image.width, image.height)
 
   private def loadScalaImage(): Img = {
     val stream = this.getClass.getResourceAsStream("/scalashop/scala.jpg")
@@ -35,10 +33,14 @@ class PhotoCanvas extends JComponent {
 
   private def loadImage(inputStream: InputStream): Img = {
     val bufferedImage = ImageIO.read(inputStream)
+
     val width = bufferedImage.getWidth
     val height = bufferedImage.getHeight
+
     val img = new Img(width, height)
+
     for (x <- 0 until width; y <- 0 until height) img(x, y) = bufferedImage.getRGB(x, y)
+
     img
   }
 
@@ -47,6 +49,7 @@ class PhotoCanvas extends JComponent {
       case Some(path) => loadFileImage(path)
       case None => loadScalaImage()
     }
+
     repaint()
   }
 
@@ -57,14 +60,15 @@ class PhotoCanvas extends JComponent {
 
   def applyFilter(filterName: String, numTasks: Int, radius: Int) {
     val dst = new Img(image.width, image.height)
+
     filterName match {
-      case "horizontal-box-blur" =>
-        HorizontalBoxBlur.parBlur(image, dst, numTasks, radius)
-      case "vertical-box-blur" =>
-        VerticalBoxBlur.parBlur(image, dst, numTasks, radius)
+      case "horizontal-box-blur" =>  HorizontalBoxBlur.parBlur(image, dst, numTasks, radius)
+      case "vertical-box-blur" => VerticalBoxBlur.parBlur(image, dst, numTasks, radius)
       case "" =>
     }
+
     image = dst
+
     repaint()
   }
 
@@ -73,7 +77,9 @@ class PhotoCanvas extends JComponent {
 
     val width = image.width
     val height = image.height
+
     val bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB)
+
     for (x <- 0 until width; y <- 0 until height) bufferedImage.setRGB(x, y, image(x, y))
 
     gcan.drawImage(bufferedImage, 0, 0, null)

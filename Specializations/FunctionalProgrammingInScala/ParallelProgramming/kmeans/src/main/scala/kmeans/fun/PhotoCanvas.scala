@@ -7,20 +7,16 @@ import java.awt.image._
 import java.io._
 import javax.imageio._
 import javax.swing._
-import javax.swing.event._
-import common._
 
 class PhotoCanvas extends JComponent {
-
   var imagePath: Option[String] = None
 
   var image = loadEPFLImage()
 
   val timerDelay = 100
-  val timer =
-    new Timer(timerDelay, new ActionListener() {
-      def actionPerformed(e: ActionEvent): Unit = repaint()
-    })
+  val timer = new Timer(timerDelay, new ActionListener() {
+    def actionPerformed(e: ActionEvent): Unit = repaint()
+  })
 
   override def getPreferredSize = {
     new Dimension(image.width, image.height)
@@ -92,5 +88,4 @@ class PhotoCanvas extends JComponent {
 
     gcan.drawImage(bufferedImage, 0, 0, null)
   }
-
 }

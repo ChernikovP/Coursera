@@ -21,16 +21,13 @@ class IndexedColorFilter(initialImage: Img,
 
   private var steps = 0
 
-  // What could we do here to speed up the computation?
   val points = imageToPoints(initialImage)
-  val means = initializeIndex(colorCount, points)
+  val means = initializeIndex(colorCount, points.par)
 
-  /* The work is done here: */
-  private val newMeans = kMeans(points, means, 0.01)
+  private val newMeans = kMeans(points.par, means.par, 0.01)
 
-  /* And these are the results exposed */
   def getStatus() = s"Converged after $steps steps."
-  def getResult() = indexedImage(initialImage, newMeans)
+  def getResult() = indexedImage(initialImage, newMeans.par)
 
   private def imageToPoints(img: Img): GenSeq[Point] =
     for (x <- 0 until img.width; y <- 0 until img.height) yield {

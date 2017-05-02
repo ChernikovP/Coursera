@@ -4,9 +4,7 @@ import org.scalameter._
 import common._
 
 object ParallelCountChangeRunner {
-
   @volatile var seqResult = 0
-
   @volatile var parResult = 0
 
   val standardConfig = config(
@@ -22,6 +20,7 @@ object ParallelCountChangeRunner {
     val seqtime = standardConfig measure {
       seqResult = ParallelCountChange.countChange(amount, coins)
     }
+
     println(s"sequential result = $seqResult")
     println(s"sequential count time: $seqtime ms")
 
@@ -29,6 +28,7 @@ object ParallelCountChangeRunner {
       val fjtime = standardConfig measure {
         parResult = ParallelCountChange.parCountChange(amount, coins, threshold)
       }
+
       println(s"parallel result = $parResult")
       println(s"parallel count time: $fjtime ms")
       println(s"speedup: ${seqtime / fjtime}")
@@ -60,6 +60,7 @@ object ParallelCountChange {
     if (threshold(money, coins) || coins.isEmpty || money <= 0) countChange(money, coins)
     else {
       val (l, r) = parallel(parCountChange(money - coins.head, coins, threshold), parCountChange(money, coins.tail, threshold))
+
       l + r
     }
 

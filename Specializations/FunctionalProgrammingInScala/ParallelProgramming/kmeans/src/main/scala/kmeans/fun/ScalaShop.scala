@@ -4,13 +4,7 @@ package fun
 import java.awt._
 import java.awt.event._
 import javax.swing._
-import javax.swing.event._
-import scala.collection.parallel._
-import scala.collection.par._
-import scala.collection.mutable.ArrayBuffer
-import scala.reflect.ClassTag
 import org.scalameter._
-import common._
 
 object ScalaShop {
 
@@ -217,5 +211,4 @@ object ScalaShop {
   def main(args: Array[String]) {
     frame.repaint()
   }
-
 }
